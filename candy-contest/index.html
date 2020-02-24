@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Letter N - Candy Contest</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <link type="text/css" rel="stylesheet" href="/candy-contest/css/main.css">
+  <link data-n-head="true" rel="icon" type="image/x-icon"
+        href="https://s3.ca-central-1.amazonaws.com/candydigital/images/favicon.ico">
+</head>
+
+<body>
+<div id="container"></div>
+<div id="debug" class="enabled" onclick="reloadDebug()">?</div>
+
+<script type="x-shader/x-vertex" id="vertexshader">
+    uniform float amplitude;
+
+    attribute vec3 displacement;
+    attribute vec3 customColor;
+
+    varying vec3 vColor;
+
+    void main() {
+      vec3 newPosition = position + amplitude * displacement;
+      vColor = customColor;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+    }
+
+</script>
+
+<script type="x-shader/x-fragment" id="fragmentshader">
+    uniform vec3 color;
+    uniform float opacity;
+
+    varying vec3 vColor;
+
+    void main() {
+      gl_FragColor = vec4( vColor * color, opacity );
+    }
+
+</script>
+
+<script>
+  /********************************/
+  /*GLOBALLY ACCESSIBLE PARAMETERS*/
+  /********************************/
+  let debug = false
+
+  /**
+   * Threejs variables
+   */
+  let renderer, scene, camera, stats, geometry, shaderMaterial
+  let line, uniforms, font
+
+  /**
+   * Geometry variables
+   */
+  const initialBevelThickness = 5
+  let bevelThickness = initialBevelThickness
+  
+  /**
+   * Timeline variables
+   */
+  let phase = 0
+
+</script>
+
+<script>
+  /**
+   * Reload the page with the proper debug parameter value
+   */
+  const reloadDebug = () => { 
+    if (!debug) {
+      window.location.href += `${window.location.search.length > 1 ? '&' : '?'}debug=true`
+    } else {
+      window.location.href = window.location.href.replace('?debug=true', '')
+    }
+  }
+</script>
+
+<script type="module" src="/candy-contest/js/main.js"></script>
+
+</body>
+
+</html>
