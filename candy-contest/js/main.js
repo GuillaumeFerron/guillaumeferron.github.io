@@ -9,7 +9,7 @@ const bevelSegments = 10
 const size = 100
 
 const loader = new THREE.FontLoader()
-loader.load('candy-contest/fonts/helvetiker_bold.typeface.json', _font => {
+loader.load('https://github.com/rollup/three-jsnext/blob/master/examples/fonts/helvetiker_bold.typeface.json', _font => {
   font = _font
   init()
   animate()
